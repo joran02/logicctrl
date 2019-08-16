@@ -1,0 +1,46 @@
+# Makefile.param 
+# Only global variable should be defined here.
+# All the variables must be used as "export" and "?=".
+# Otherwise, there will be some errors, when Makefile.param is nested.
+
+# Use this file as the following sample
+# ifeq ($(PARAM_FILE), )
+#     PARAM_FILE:=../Makefile.param
+#     include $(PARAM_FILE)
+# endif
+
+export CROSS:=arm-goke-linux-uclibcgnueabi-
+
+export CC:=$(CROSS)gcc
+export C++:=$(CROSS)g++
+export AR:=$(CROSS)ar
+
+export MPP_CFLAGS:= 
+
+ifeq ($(HIGDB), y)
+	MPP_CFLAGS += -g
+endif
+
+ifeq ($(HIGDB), n)
+	MPP_CFLAGS += -Os
+endif
+
+
+COMMON_DIR:=$(PWD)/../common
+
+INC_FLAGS := -I/root/GK710X_LinuxSDK_v2.0.0/install/arm11-gcc-uClibc-linux-GK710X/include/adi
+INC_FLAGS +=  -I/root/GK710X_LinuxSDK_v2.0.0/install/arm11-gcc-uClibc-linux-GK710X/include/subsystem/osd
+INC_FLAGS +=  -I /opt/goke/ct/4.6.1/usr/arm-goke-linux-gnueabi/sysroot/usr/include
+INC_FLAGS +=  -I/root/GK710X_LinuxSDK_v2.0.0/linux/rootfs/oss-prebuild-glibc/alsa-lib-1.0.26/include
+INC_FLAGS +=  -I/root/GK710X_LinuxSDK_v2.0.0/install/arm11-gcc-uClibc-linux-GK710X/include/image/
+
+
+MPI_LIBS := /root/GK710X_LinuxSDK_v2.0.0/install/arm11-gcc-uClibc-linux-GK710X/lib/libadi.a
+#MPI_LIBS += /root/GK710X_LinuxSDK_v2.0.0/install/arm11-gcc-uClibc-linux-GK710X/lib/libisp3a.a
+MPI_LIBS += /root/GK710X_LinuxSDK_v2.0.0/install/arm11-gcc-uClibc-linux-GK710X/lib/libosd.a
+MPI_LIBS += /root/GK710X_LinuxSDK_v2.0.0/install/arm11-gcc-uClibc-linux-GK710X/lib/libimage.a
+
+CFLAGS :=   $(INC_FLAGS) -lpthread -lm
+
+
+# End!!

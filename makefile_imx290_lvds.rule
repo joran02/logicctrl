@@ -1,0 +1,59 @@
+#Makefile.param 
+# Only global variable should be defined here.
+# All the variables must be used as "export" and "?=".
+# Otherwise, there will be some errors, when Makefile.param is nested.
+
+# Use this file as the following sample
+# ifeq ($(PARAM_FILE), )
+#     PARAM_FILE:=../Makefile.param
+#     include $(PARAM_FILE)
+# endif
+
+export CROSS:=arm-hisiv500-linux-
+
+export CC:=$(CROSS)gcc
+export C++:=$(CROSS)g++
+export AR:=$(CROSS)ar
+export STRIP:=$(CROSS)strip
+
+export MPP_CFLAGS:= 
+
+export HIGDB:= n
+
+ifeq ($(HIGDB), y)
+	MPP_CFLAGS += -g
+endif
+
+ifeq ($(HIGDB), n)
+	MPP_CFLAGS += -O0
+endif
+
+
+COMMON_DIR:=$(PWD)/../common
+
+INC_FLAGS := -I/home/dev/Documents/river/Hi3519V101_SDK_V1.0.4.0/mpp_big-little/include
+INC_FLAGS +=  -I/home/dev/Documents/river/Hi3519V101_SDK_V1.0.4.0/mpp_big-little/component/acodec
+INC_FLAGS +=  -I /home/dev/Documents/river/Hi3519V101_SDK_V1.0.4.0/osal/include
+INC_FLAGS +=  -I/home/dev/Documents/river/Hi3519V101_SDK_V1.0.4.0/drv/extdrv/tlv320aic31
+INC_FLAGS +=  -I/home/dev/Documents/river/lib3519freetype/include/freetype2
+
+
+
+MPI_LIBS := /home/dev/Documents/river/Hi3519V101_SDK_V1.0.4.0/mpp_big-little/lib/libmpi.a 
+MPI_LIBS += /home/dev/Documents/river/Hi3519V101_SDK_V1.0.4.0/mpp_big-little/lib/libive.a
+MPI_LIBS += /home/dev/Documents/river/Hi3519V101_SDK_V1.0.4.0/mpp_big-little/lib/libmd.a
+MPI_LIBS += /home/dev/Documents/river/Hi3519V101_SDK_V1.0.4.0/mpp_big-little/lib/libVoiceEngine.a
+MPI_LIBS += /home/dev/Documents/river/Hi3519V101_SDK_V1.0.4.0/mpp_big-little/lib/libupvqe.a 
+MPI_LIBS += /home/dev/Documents/river/Hi3519V101_SDK_V1.0.4.0/mpp_big-little/lib/libdnvqe.a
+MPI_LIBS += /home/dev/Documents/river/Hi3519V101_SDK_V1.0.4.0/mpp_big-little/lib/lib_hiae.a
+MPI_LIBS += /home/dev/Documents/river/Hi3519V101_SDK_V1.0.4.0/mpp_big-little/lib/libisp.a 
+MPI_LIBS += /home/dev/Documents/river/Hi3519V101_SDK_V1.0.4.0/mpp_big-little/lib/libsns_19v101_imx290.a
+MPI_LIBS += /home/dev/Documents/river/Hi3519V101_SDK_V1.0.4.0/mpp_big-little/lib/lib_hiae.a 
+MPI_LIBS += /home/dev/Documents/river/Hi3519V101_SDK_V1.0.4.0/mpp_big-little/lib/lib_hiawb.a 
+MPI_LIBS += /home/dev/Documents/river/Hi3519V101_SDK_V1.0.4.0/mpp_big-little/lib/lib_hiaf.a 
+MPI_LIBS += /home/dev/Documents/river/Hi3519V101_SDK_V1.0.4.0/mpp_big-little/lib/lib_hidefog.a
+
+CFLAGS :=   $(INC_FLAGS) -L/home/dev/Documents/river/lib3519freetype/lib/  -Dhi3519v101 -DHICHIP=0x35190101 -DSENSOR_TYPE=SONY_IMX290_LVDS_2K_30FPS -DHI_RELEASE -DHI_XXXX -lpthread -lfreetype -lm -ldl -DISP_V2 -Dhi3519v101 -DHI_ACODEC_TYPE_INNER -mcpu=arm926ej-s -mno-unaligned-access -fno-aggressive-loop-optimizations -ffunction-sections -fdata-sections -fstack-protector  
+#CFLAGS += -lpthread -lm -ldl 
+
+# End!!
